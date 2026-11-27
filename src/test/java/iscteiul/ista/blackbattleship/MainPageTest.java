@@ -8,7 +8,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.Duration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,11 +25,17 @@ public class MainPageTest {
     public void setUp() {
         Logger.getLogger("org.openqa.selenium").setLevel(Level.SEVERE);
 
-        driver = new ChromeDriver();
+        FirefoxOptions options = new FirefoxOptions();
+        Path firefoxTest = Path.of(System.getProperty("user.home"), ".local/firefox-test/bin/firefox");
+        if (Files.exists(firefoxTest)) {
+            options.setBinary(firefoxTest.toString());
+        }
+
+        driver = new FirefoxDriver(options);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         driver.get("https://www.jetbrains.com/");
-        
+
         mainPage = new MainPage(driver);
         mainPage.closePopUp();
     }
