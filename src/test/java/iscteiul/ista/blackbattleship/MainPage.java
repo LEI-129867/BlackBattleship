@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.NoSuchElementException;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
@@ -35,6 +36,10 @@ public class MainPage {
      * This method encapsulates the interaction with the popup element.
      */
     public void closePopUp() {
-        cookieAllowButton.click();
+        try {
+            cookieAllowButton.click();
+        } catch (NoSuchElementException e) {
+            //ignora
+        }
     }
 }
